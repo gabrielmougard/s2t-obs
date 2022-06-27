@@ -14,3 +14,7 @@
 	path = qtbase
 	url = https://github.com/qt/qtbase.git
 	branch = 6.4
+[submodule "obs-studio"]
+	path = obs-studio
+	url = https://github.com/obsproject/obs-studio.git
+	branch = master

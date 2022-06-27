@@ -1,0 +1,9 @@
+{
+	"dependencies" : [
+		"grpc",
+		"qtbase",
+		"spdlog",
+		"concurrentqueue",
+		"obs-studio"
+  	]
+}
