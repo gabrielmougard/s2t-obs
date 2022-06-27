@@ -10,3 +10,7 @@
 	path = spdlog
 	url = https://github.com/gabime/spdlog.git
 	branch = v1.x
+[submodule "qtbase"]
+	path = qtbase
+	url = https://github.com/qt/qtbase.git
+	branch = 6.4
