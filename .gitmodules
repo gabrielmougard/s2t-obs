@@ -6,3 +6,7 @@
 	path = csm
 	url = https://github.com/gabrielmougard/csm.git
 	branch = main
+[submodule "spdlog"]
+	path = spdlog
+	url = https://github.com/gabime/spdlog.git
+	branch = v1.x
