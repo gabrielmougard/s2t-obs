@@ -2,3 +2,7 @@
 	path = concurrentqueue
 	url = https://github.com/gabrielmougard/concurrentqueue.git
 	branch = master
+[submodule "csm"]
+	path = csm
+	url = https://github.com/gabrielmougard/csm.git
+	branch = main
