@@ -1,1 +1,5 @@
+# .vscode
+.vscode
+
+# inference server virtualenv
 triton/.env
