@@ -18,3 +18,7 @@
 	path = obs-studio
 	url = https://github.com/obsproject/obs-studio.git
 	branch = master
+[submodule "grpc/grpc"]
+	path = grpc/grpc
+	url = https://github.com/grpc/grpc.git
+	branch = v1.47.x
