@@ -1,1 +1,8 @@
+# inference server virtualenv
 triton/.env
+
+# OBS build dependencies
+obs-studio/obs-build-dependencies
+
+# build folder
+build_release
