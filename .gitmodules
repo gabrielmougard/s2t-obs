@@ -1,0 +1,4 @@
+[submodule "concurrentqueue"]
+	path = concurrentqueue
+	url = https://github.com/gabrielmougard/concurrentqueue.git
+	branch = master
