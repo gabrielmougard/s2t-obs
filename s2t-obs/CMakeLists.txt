@@ -7,20 +7,17 @@ set(VERSION_STRING "0.1")
 
 add_compile_definitions(VERSION_STRING="${VERSION_STRING}")
 
-set(THIRD_PARTY_DIR "third_party")
-set(CONCURRENTQUEUE_DIR "${THIRD_PARTY_DIR}/concurrentqueue")
-set(SPDLOG_DIR "${THIRD_PARTY_DIR}/spdlog")
-set(QTBASE_DIR "${THIRD_PARTY_DIR}/qtbase")
+# Add path for custom modules
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules/")
-
-add_subdirectory(${CONCURRENTQUEUE_DIR})
-add_subdirectory(${SPDLOG_DIR})
-execute_process(
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/${QTBASE_DIR}
-    COMMAND "./configure" "-release" 
-)
-add_subdirectory(${QTBASE_DIR})
+find_package(MyProtobuf REQUIRED)
+find_package(MyGRPC REQUIRED)
+find_package(spdlog REQUIRED)
+find_package(concurrentqueue REQUIRED)
+find_package(Qt6Widgets REQUIRED)
+find_package(Qt6Core REQUIRED)
+find_package(libobs REQUIRED)
+find_package(obs-frontend-api REQUIRED)
 
 set(S2T_OBS_PLUGIN_SRCS
     src/plugin.cc
@@ -36,7 +33,11 @@ add_library(s2t-obs-plugin MODULE
 )
 
 target_link_libraries(s2t-obs-plugin
-    concurrentqueue
+    concurrentqueue::concurrentqueue
     spdlog::spdlog
     Qt6::Widgets
+    OBS::libobs
+    OBS::obs-frontend-api
 )
+
+install(TARGETS s2t-obs-plugin DESTINATION lib)
