@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package expcmake;
+package example;
 
 message Address {
     string name     = 1;
