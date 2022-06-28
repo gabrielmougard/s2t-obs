@@ -2,6 +2,13 @@
 
 The goal is to generate subtitles in different languages taht could be displayed as captions in OBS and then streamed to the twitch viewers that can pick the language.
 
+## Build
+
+* clone repo with `--recursive` option
+* cd into the repo and try `git submodule update --recursive --merge --init` in the `obs-studio` as there are nested submodules
+* Then do `make build` (you might want to grab a coffee if this is the first build and also depending on your machine)
+
+
 ## Description of plugin
 
 The plugin contains the following:

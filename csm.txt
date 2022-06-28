@@ -1,0 +1,6 @@
+grpc
+qtbase
+spdlog
+concurrentqueue
+obs-studio
+s2t-obs
