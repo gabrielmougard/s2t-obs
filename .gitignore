@@ -1,3 +1,9 @@
+# macos related
+.DS_Store
+
+# vscode related
+.vscode
+
 # inference server virtualenv
 triton/.env
 
