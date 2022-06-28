@@ -25,7 +25,7 @@ set(obs_QRC src/resources/obs.qrc)
 qt6_add_resources(obs_QRC_SOURCES ${obs_QRC})
 
 # Protos generation
-set(PROTOS protos/example.proto)
+set(PROTOS protos/s2t.proto)
 set(PROTO_GENERATED_PATH ${CMAKE_CURRENT_BINARY_DIR}/proto-src)
 file(MAKE_DIRECTORY ${PROTO_GENERATED_PATH})
 set(GRPC_GENERATED_PATH ${PROTO_GENERATED_PATH}) # consider adding separate folder for grpc generated files

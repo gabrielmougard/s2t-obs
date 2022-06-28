@@ -1,0 +1,230 @@
+// Copyright 2022 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// Similar to https://github.com/googleapis/googleapis/blob/master/google/cloud/speech/v1/cloud_speech.proto but way simpler
+
+syntax = "proto3";
+
+package s2tobsgrpc;
+
+import "google/protobuf/any.proto";
+import "google/protobuf/duration.proto";
+
+option cc_enable_arenas = true;
+
+service Speech {
+    // Performs bidirectional streaming speech recognition: receive results while
+    // sending audio.
+    rpc StreamingRecognize(stream StreamingRecognizeRequest) returns (stream StreamingRecognizeResponse) {}
+}
+
+// The top-level message sent by the client for the `StreamingRecognize` method.
+// Multiple `StreamingRecognizeRequest` messages are sent. The first message
+// must contain a `streaming_config` message and must not contain
+// `audio_content`. All subsequent messages must contain `audio_content` and
+// must not contain a `streaming_config` message.
+message StreamingRecognizeRequest {
+    // The streaming request, which is either a streaming config or audio content.
+    oneof streaming_request {
+        // Provides information to the recognizer that specifies how to process the
+        // request. The first `StreamingRecognizeRequest` message must contain a
+        // `streaming_config`  message.
+        StreamingRecognitionConfig streaming_config = 1;
+    
+        // The audio data to be recognized. Sequential chunks of audio data are sent
+        // in sequential `StreamingRecognizeRequest` messages. The first
+        // `StreamingRecognizeRequest` message must not contain `audio_content` data
+        // and all subsequent `StreamingRecognizeRequest` messages must contain
+        // `audio_content` data. The audio bytes must be encoded as specified in
+        // `RecognitionConfig`.
+        bytes audio_content = 2;
+    }
+}
+
+// A streaming speech recognition result corresponding to a portion of the audio
+// that is currently being processed.
+message StreamingRecognitionResult {
+    // May contain one or more recognition hypotheses (up to the
+    // maximum specified in `max_alternatives`).
+    // These alternatives are ordered in terms of accuracy, with the top (first)
+    // alternative being the most probable, as ranked by the recognizer.
+    repeated SpeechRecognitionAlternative alternatives = 1;
+  
+    // If `false`, this `StreamingRecognitionResult` represents an
+    // interim result that may change. If `true`, this is the final time the
+    // speech service will return this particular `StreamingRecognitionResult`,
+    // the recognizer will not return any further hypotheses for this portion of
+    // the transcript and corresponding audio.
+    bool is_final = 2;
+  
+    // An estimate of the likelihood that the recognizer will not
+    // change its guess about this interim result. Values range from 0.0
+    // (completely unstable) to 1.0 (completely stable).
+    // This field is only provided for interim results (`is_final=false`).
+    // The default of 0.0 is a sentinel value indicating `stability` was not set.
+    float stability = 3;
+  
+    // Time offset of the end of this result relative to the
+    // beginning of the audio.
+    google.protobuf.Duration result_end_time = 4;
+
+    // Output only. The [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
+    // of the language in this result.
+    string language_code = 6;
+}
+
+// `StreamingRecognizeResponse` is the only message returned to the client by
+// `StreamingRecognize`. A series of zero or more `StreamingRecognizeResponse`
+// messages are streamed back to the client. If there is no recognizable
+// audio, and `single_utterance` is set to false, then no messages are streamed
+// back to the client.
+message StreamingRecognizeResponse {
+    // Indicates the type of speech event.
+    enum SpeechEventType {
+        // No speech event specified.
+        SPEECH_EVENT_UNSPECIFIED = 0;
+    
+        // This event indicates that the server has detected the end of the user's
+        // speech utterance and expects no additional speech. Therefore, the server
+        // will not process additional audio (although it may subsequently return
+        // additional results). The client should stop sending additional audio
+        // data, half-close the gRPC connection, and wait for any additional results
+        // until the server closes the gRPC connection. This event is only sent if
+        // `single_utterance` was set to `true`, and is not used otherwise.
+        END_OF_SINGLE_UTTERANCE = 1;
+    }
+  
+    // If set, returns a [google.rpc.Status][google.rpc.Status] message that
+    // specifies the error for the operation.
+    Status error = 1;
+  
+    // This repeated list contains zero or more results that
+    // correspond to consecutive portions of the audio currently being processed.
+    // It contains zero or one `is_final=true` result (the newly settled portion),
+    // followed by zero or more `is_final=false` results (the interim results).
+    repeated StreamingRecognitionResult results = 2;
+  
+    // Indicates the type of speech event.
+    SpeechEventType speech_event_type = 4;
+}
+
+// Provides information to the recognizer that specifies how to process the
+// request.
+message StreamingRecognitionConfig {
+    // Provides information to the recognizer that specifies how to
+    // process the request.
+    RecognitionConfig config = 1;
+  
+    // If `false` or omitted, the recognizer will perform continuous
+    // recognition (continuing to wait for and process audio even if the user
+    // pauses speaking) until the client closes the input stream (gRPC API) or
+    // until the maximum time limit has been reached. May return multiple
+    // `StreamingRecognitionResult`s with the `is_final` flag set to `true`.
+    //
+    // If `true`, the recognizer will detect a single spoken utterance. When it
+    // detects that the user has paused or stopped speaking, it will return an
+    // `END_OF_SINGLE_UTTERANCE` event and cease recognition. It will return no
+    // more than one `StreamingRecognitionResult` with the `is_final` flag set to
+    // `true`.
+    bool single_utterance = 2;
+  
+    // If `true`, interim results (tentative hypotheses) may be
+    // returned as they become available (these interim results are indicated with
+    // the `is_final=false` flag).
+    // If `false` or omitted, only `is_final=true` result(s) are returned.
+    bool interim_results = 3;
+}
+
+// Provides information to the recognizer that specifies how to process the
+// request.
+message RecognitionConfig {
+    // The encoding of the audio data sent in the request.
+    enum AudioEncoding {
+      // Not specified.
+      ENCODING_UNSPECIFIED = 0;
+  
+      // Uncompressed 16-bit signed little-endian samples (Linear PCM).
+      LINEAR16 = 1;
+    }
+  
+    // Encoding of audio data sent in all `RecognitionAudio` messages.
+    AudioEncoding encoding = 1;
+  
+    // Sample rate in Hertz of the audio data sent in all
+    // `RecognitionAudio` messages. Valid values are: 8000-48000.
+    // 16000 is optimal.
+    int32 sample_rate_hertz = 2;
+  
+    // Required. The language of the supplied audio as a
+    // [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
+    // Example: "en-US".
+    string language_code = 3;
+  
+    // Which model to select for the given request. Select the model
+    // best suited to your domain to get best results. If a model is not
+    // explicitly specified, then we auto-select a model based on the parameters
+    // in the RecognitionConfig.
+    string model = 13;
+}
+  
+// Alternative hypotheses (a.k.a. n-best list).
+message SpeechRecognitionAlternative {
+    // Transcript text representing the words that the user spoke.
+    // In languages that use spaces to separate words, the transcript might have a
+    // leading space if it isn't the first result. You can concatenate each result
+    // to obtain the full transcript without using a separator.
+    string transcript = 1;
+  
+    // The confidence estimate between 0.0 and 1.0. A higher number
+    // indicates an estimated greater likelihood that the recognized words are
+    // correct.
+    float confidence = 2;
+  
+    // A list of word-specific information for each recognized word.
+    repeated WordInfo words = 3;
+}
+  
+// Word-specific information for recognized words.
+message WordInfo {
+    // Time offset relative to the beginning of the audio,
+    // and corresponding to the start of the spoken word.
+    google.protobuf.Duration start_time = 1;
+
+    // Time offset relative to the beginning of the audio,
+    // and corresponding to the end of the spoken word.
+    google.protobuf.Duration end_time = 2;
+
+    // The word corresponding to this set of information.
+    string word = 3;
+
+    // The confidence estimate between 0.0 and 1.0. A higher number
+    // indicates an estimated greater likelihood that the recognized words are
+    // correct.
+    float confidence = 4;
+}
+
+// Classic status message for a generic gRPC response
+message Status {
+    // The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+    int32 code = 1;
+  
+    // A developer-facing error message, which should be in English. Any
+    // user-facing error message should be localized and sent in the
+    // [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+    string message = 2;
+  
+    // A list of messages that carry the error details.  There is a common set of
+    // message types for APIs to use.
+    repeated google.protobuf.Any details = 3;
+}
