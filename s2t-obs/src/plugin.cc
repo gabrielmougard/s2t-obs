@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #include <iostream>
-#include "concurrentqueue/concurrentqueue.h"
+#include "moodycamel/blockingconcurrentqueue.h"
 
 #include "spdlog/spdlog.h"
-// #include "obs-frontend-api.h"
+#include "obs-frontend-api.h"
 
 // #include "ui/caption_main_widget.h"
 // #include "ui/caption_manager.h"

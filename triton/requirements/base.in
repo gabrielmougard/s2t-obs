@@ -3,3 +3,7 @@ argparse
 torch
 transformers
 onnxruntime
+grpcio
+grpcio-tools
+
+sentencepiece

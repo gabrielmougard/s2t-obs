@@ -7,6 +7,9 @@
 # inference server virtualenv
 triton/.env
 
+# Used models for inference
+models
+
 # OBS build dependencies
 obs-studio/obs-build-dependencies
 

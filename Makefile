@@ -23,17 +23,27 @@ fetch-obs-dependencies:
 grpc-plugin:  # @@Dependencies@@ Build gRPC plugin for the C proto compiler
 	cd ${BUILD_RELEASE_DIR} && ninja grpc
 
-protos: grpc-plugin
+client-protos: grpc-plugin
 	@if [ -f "./build_release/install/grpc/bin/grpc_cpp_plugin" ] ; then \
 		rm -rf ./build_release/build/s2t-obs/proto-src ; \
 		mkdir -p ./build_release/build/s2t-obs/proto-src ; \
-		protoc \
+		./build_release/install/grpc/bin/protoc \
 			-I=./s2t-obs/protos \
 			--cpp_out=./build_release/build/s2t-obs/proto-src \
-			./s2t-obs/protos/stt.proto ; \
+			./s2t-obs/protos/s2t.proto ; \
 	else \
 		echo "GRPC Plugin Not Found. Please build plugin" ; \
 	fi
+
+server-protos:
+	cd triton && \
+	source .env/bin/activate && \
+	python -m grpc_tools.protoc \
+		--proto_path=../s2t-obs/protos \
+		--python_out=./src/grpc \
+		--grpc_python_out=./src/grpc \
+		../s2t-obs/protos/s2t.proto && \
+	deactivate
 
 #########
 # S2T_OBS
