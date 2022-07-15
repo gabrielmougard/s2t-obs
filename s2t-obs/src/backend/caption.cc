@@ -17,6 +17,8 @@
 #include "caption.h"
 #include "transcript.h"
 
+namespace backend {
+
 typedef std::tuple<std::string, std::string> TextOutputTup;
 
 void set_text_source_text(const std::string &text_source_name, const std::string &caption_text) {
@@ -638,4 +640,6 @@ bool TranscriptOutputSettings::hasBaseSettings() const {
         return false;
 
     return true;
+}
+
 }

@@ -12,3 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// TODO
+
+namespace utils {
+
+bool is_streaming_live() {
+
+}
+
+bool is_recording_live() {
+
+}
+
+bool is_virtualcam_on() {
+
+}
+
+typedef std::tuple<std::string, std::string, uint32_t> ObsSourceTup;
+
+static std::vector<std::string> get_audio_sources() {
+    auto sources = get_obs_sources();
+    std::vector<std::string> audio_sources;
+    for (auto &source: sources) {
+        if (std::get<2>(source) & OBS_SOURCE_AUDIO) {
+            audio_sources.push_back(std::get<0>(source));
+        }
+    }
+    return audio_sources;
+}
+
+}
