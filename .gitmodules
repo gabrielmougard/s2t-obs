@@ -1,6 +1,6 @@
 [submodule "csm"]
 	path = csm
-	url = ssh://git@github.com:gabrielmougard/csm.git
+	url = git@github.com:gabrielmougard/csm.git
 	branch = main
 [submodule "spdlog"]
 	path = spdlog
