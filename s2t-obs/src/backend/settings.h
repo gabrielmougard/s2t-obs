@@ -12,3 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifndef OBS_SPEECH2TEXT_SETTINGS_H
+#define OBS_SPEECH2TEXT_SETTINGS_H
+
+
+#include "caption.h"
+
+struct PluginSettings {
+    bool enabled;
+    SourceCaptionerSettings source_cap_settings;
+
+    PluginSettings(bool enabled, const SourceCaptionerSettings &source_cap_settings) :
+            enabled(enabled),
+            source_cap_settings(source_cap_settings) {}
+
+    bool operator==(const PluginSettings &rhs) const {
+        return enabled == rhs.enabled &&
+               source_cap_settings == rhs.source_cap_settings;
+    }
+
+    bool operator!=(const PluginSettings &rhs) const {
+        return !(rhs == *this);
+    }
+
+    void print(const char *line_prefix = "") {
+        printf("%PluginSettings\n", line_prefix);
+        printf("%senabled: %d\n", line_prefix, enabled);
+        source_cap_settings.print((std::string(line_prefix) + "").c_str());
+    }
+};
+
+
+#endif //OBS_SPEECH2TEXT_SETTINGS_H
