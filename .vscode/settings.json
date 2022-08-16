@@ -2,5 +2,11 @@
     "makefile.extensionOutputFolder": "./.vscode",
     "workbench.editorAssociations": {
         "*.wav": "wavPreview.audioPreview"
+    },
+    "files.associations": {
+        "string": "cpp",
+        "*.inc": "cpp",
+        "future": "cpp",
+        "thread": "cpp"
     }
 }

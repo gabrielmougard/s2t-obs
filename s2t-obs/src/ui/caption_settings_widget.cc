@@ -157,7 +157,7 @@ CaptionSettingsWidget::CaptionSettingsWidget(const CaptionSettings &latests_sett
     captionWhenComboBox->addItem("Caption source is heard on stream", "own_source");
     captionWhenComboBox->addItem("Mute source is heard on stream", "other_mute_source");
 
-    setup_combobox_languages(*languageComboBox);
+    //setup_combobox_languages(*languageComboBox);
     setup_combobox_profanity(*profanityFilterComboBox);
     setup_combobox_capitalization(*capitalizationComboBox);
     setup_combobox_capitalization(*srtCapitalizationComboBox);
@@ -177,7 +177,7 @@ CaptionSettingsWidget::CaptionSettingsWidget(const CaptionSettings &latests_sett
     
     QObject::connect(captionWhenComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &CaptionSettingsWidget::caption_when_index_change);
     QObject::connect(transcriptFormatComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &CaptionSettingsWidget::transcript_format_index_change);
-    QObject::connect(languageComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &CaptionSettingsWidget::language_index_change);
+    //QObject::connect(languageComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &CaptionSettingsWidget::language_index_change);
     QObject::connect(recordingTranscriptFilenameComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &CaptionSettingsWidget::recording_name_index_change);
     QObject::connect(streamingTranscriptFilenameComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &CaptionSettingsWidget::streaming_name_index_change);
     QObject::connect(virtualcamTranscriptFilenameComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &CaptionSettingsWidget::virtualcam_name_index_change);
