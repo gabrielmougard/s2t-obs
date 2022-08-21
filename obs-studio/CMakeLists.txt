@@ -87,18 +87,42 @@ install(FILES
         DESTINATION ${CMAKE_INSTALL_PREFIX}/include/obs-frontend-api
 )
 
+
 # Install libobs targets
-install(FILES
+if(APPLE)
+  install(FILES
           ${CMAKE_CURRENT_SOURCE_DIR}/obs-studio/build/libobs/libobsConfig.cmake
           ${CMAKE_CURRENT_SOURCE_DIR}/obs-studio/build/libobs/libobsConfigVersion.cmake
           ${CMAKE_CURRENT_SOURCE_DIR}/obs-studio/build/libobs/libobsTargets.cmake
           DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/cmake/libobs
-)
+  )
+elseif(UNIX AND NOT APPLE)
+  # message("BUILD DIR : ", ${CMAKE_CURRENT_BINARY_DIR})
+  install(FILES
+          ${CMAKE_CURRENT_BINARY_DIR}/obs-studio/src/obs-studio-build/libobs/libobsConfig.cmake
+          ${CMAKE_CURRENT_BINARY_DIR}/obs-studio/src/obs-studio-build/libobs/libobsConfigVersion.cmake
+          ${CMAKE_CURRENT_BINARY_DIR}/obs-studio/src/obs-studio-build/libobs/libobsTargets.cmake
+          DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/cmake/libobs
+  )
+else()
+  message(FATAL_ERROR "Installing libobs targets for s2t-plugin not yet supported for windows platforms")
+endif()
 
 # Install obs-frontend-api targets
-install(FILES
-          ${CMAKE_CURRENT_SOURCE_DIR}/obs-studio/build/UI/obs-frontend-api/obs-frontend-apiConfig.cmake
-          ${CMAKE_CURRENT_SOURCE_DIR}/obs-studio/build/UI/obs-frontend-api/obs-frontend-apiConfigVersion.cmake
-          ${CMAKE_CURRENT_SOURCE_DIR}/obs-studio/build/UI/obs-frontend-api/obs-frontend-apiTargets.cmake
-          DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/cmake/obs-frontend-api
-)
+if(APPLE)
+  install(FILES
+            ${CMAKE_CURRENT_SOURCE_DIR}/obs-studio/build/UI/obs-frontend-api/obs-frontend-apiConfig.cmake
+            ${CMAKE_CURRENT_SOURCE_DIR}/obs-studio/build/UI/obs-frontend-api/obs-frontend-apiConfigVersion.cmake
+            ${CMAKE_CURRENT_SOURCE_DIR}/obs-studio/build/UI/obs-frontend-api/obs-frontend-apiTargets.cmake
+            DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/cmake/obs-frontend-api
+  )
+elseif(UNIX AND NOT APPLE)
+  install(FILES
+            ${CMAKE_CURRENT_BINARY_DIR}/obs-studio/src/obs-studio-build/UI/obs-frontend-api/obs-frontend-apiConfig.cmake
+            ${CMAKE_CURRENT_BINARY_DIR}/obs-studio/src/obs-studio-build/UI/obs-frontend-api/obs-frontend-apiConfigVersion.cmake
+            ${CMAKE_CURRENT_BINARY_DIR}/obs-studio/src/obs-studio-build/UI/obs-frontend-api/obs-frontend-apiTargets.cmake
+            DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/cmake/obs-frontend-api
+  )
+else()
+  message(FATAL_ERROR "Installing obs-frontend targets for s2t-plugin not yet supported for windows platforms")
+endif()
