@@ -16,8 +16,9 @@
 
 #include <utility>
 
-#include "util/platform.h" // OBS platform utils
+#include <util/platform.h> // OBS platform utils
 #include "spdlog/spdlog.h"
+
 namespace backend {
 
 static void audio_captured(void *param, size_t mix_idx, struct audio_data *audio) {

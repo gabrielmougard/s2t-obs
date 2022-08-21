@@ -14,7 +14,7 @@
 
 #include "caption_settings_widget.h"
 
-#include "backend/scene_settings.h"
+#include "backend/settings.h"
 
 #include <QLineEdit>
 #include <QFileDialog>

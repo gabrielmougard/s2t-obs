@@ -23,7 +23,9 @@
 #include <mutex>
 
 #include "threadsafe_cb.h"
-#include "util/utils_backend.h"
+#include "utils/backend.h"
+
+namespace backend {
 
 class AudioCapturePipeline {
     OBSSource audio_source;
@@ -60,3 +62,5 @@ public:
 
     audio_source_capture_status check_source_status();
 };
+
+}

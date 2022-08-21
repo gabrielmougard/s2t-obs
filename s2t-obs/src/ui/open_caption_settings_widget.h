@@ -17,7 +17,7 @@
 
 #include "ui_open_caption_settings_widget.h"
 
-#include "utils/utils_ui.h"
+#include "utils/ui.h"
 
 #include <QPushButton>
 

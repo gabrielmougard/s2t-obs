@@ -19,6 +19,8 @@
 #include <mutex>
 #include <functional>
 
+namespace backend {
+
 template<typename T>
 class ThreadsafeCb {
 public:
@@ -51,5 +53,7 @@ public:
         clear();
     }
 };
+
+}
 
 #endif // OBS_SPEECH2TEXT_PLUGIN_THREADSAFE_CB_H

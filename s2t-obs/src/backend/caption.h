@@ -15,13 +15,15 @@
 #ifndef OBS_SPEECH2TEXT_PLUGIN_CAPTION_H
 #define OBS_SPEECH2TEXT_PLUGIN_CAPTION_H
 
-#include <inference_stream.h>
-#include "audio_in_session.h"
-#include "audio_out_session.h"
-#include "CaptionResultHandler.h"
+#include "inference_stream.h"
+#include "audio_capture_pipeline.h"
+#include "audio_converter_pipeline.h"
+#include "post_caption_handler.h"
 
 #include <QObject>
 #include <QTimer>
+
+namespace backend {
 
 typedef unsigned int uint;
 
@@ -601,6 +603,8 @@ public:
     }
 
 };
+
+}
 
 #endif //OBS_SPEECH2TEXT_PLUGIN_CAPTION_H
 

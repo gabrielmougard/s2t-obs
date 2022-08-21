@@ -17,8 +17,8 @@
 
 #include "ui_caption_main_widget.h"
 
-#include "backend/caption_source.h"
-#include "backend/caption_settings.h"
+#include "backend/caption.h"
+#include "backend/settings.h"
 #include "caption_manager.h"
 #include "caption_settings_widget.h"
 

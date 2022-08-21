@@ -22,8 +22,8 @@
 
 #include "backend/caption_stream.h"
 #include "backend/audio_capture_pipeline.h"
-#include "backend/caption_source.h"
-#include "backend/caption_settings.h"
+#include "backend/caption.h"
+#include "backend/settings.h"
 
 
 namespace ui {

@@ -14,8 +14,8 @@
 
 
 #include "caption_main_widget.h"
-#include "util/ui_utils.h"
-#include "util/caption_stream_helper.h"
+#include "utils/ui.h"
+#include "utils/caption.h"
 
 #include <QTimer>
 #include <QThread>

@@ -18,6 +18,8 @@
 
 #include "caption.h"
 
+namespace backend {
+
 struct PluginSettings {
     bool enabled;
     SourceCaptionerSettings source_cap_settings;
@@ -42,5 +44,6 @@ struct PluginSettings {
     }
 };
 
+}
 
 #endif //OBS_SPEECH2TEXT_SETTINGS_H

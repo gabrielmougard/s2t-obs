@@ -18,7 +18,7 @@
 #include <cstdint>
 #include <functional>
 
-#include "third_party/concurrentqueue/blockingconcurrentqueue.h"
+#include <moodycamel/blockingconcurrentqueue.h>
 
 #include "raw_result.h"
 #include "threadsafe_cb.h"

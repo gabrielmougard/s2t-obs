@@ -17,7 +17,7 @@
 
 #include "ui_caption_dock_widget.h"
 
-#include "backend/caption_source.h"
+#include "backend/caption.h"
 #include "caption_manager.h"
 #include "caption_main_widget.h"
 

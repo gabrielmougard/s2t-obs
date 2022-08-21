@@ -14,7 +14,7 @@
 
 #include "caption_dock_widget.h"
 
-#include "util/ui_utils.h"
+#include "utils/ui.h"
 
 #include <QLabel>
 #include <QLineEdit>
@@ -30,8 +30,8 @@ CaptionDockWidget::CaptionDockWidget(const QString &title, CaptionManager &manag
     setFeatures(QDockWidget::AllDockWidgetFeatures);
     setFloating(true);
 
-    QObject::connect(&manager.source_captioner, &CaptionSource::caption_source_status_changed, this, &CaptionDockWidget::handle_source_capture_status_change, Qt::QueuedConnection);
-    QObject::connect(&manager.source_captioner, &CaptionSource::caption_result_received, this, &CaptionDockWidget::handle_caption_data_cb, Qt::QueuedConnection);
+    QObject::connect(&manager.source_captioner, &SourceCaptioner::caption_source_status_changed, this, &CaptionDockWidget::handle_source_capture_status_change, Qt::QueuedConnection);
+    QObject::connect(&manager.source_captioner, &SourceCaptioner::caption_result_received, this, &CaptionDockWidget::handle_caption_data_cb, Qt::QueuedConnection);
 
     QFontMetrics fm = this->captionLinesPlainTextEdit->fontMetrics();
     spdlog::info("dock: {} {} fs: {}", this->minimumWidth(), this->maximumWidth(), this->captionLinesPlainTextEdit->font().pointSize());
@@ -45,7 +45,7 @@ CaptionDockWidget::CaptionDockWidget(const QString &title, CaptionManager &manag
     this->verticalLayout->setAlignment(Qt::AlignTop);
 }
 
-void CaptionDockWidget::handle_source_capture_status_change(std::shared_ptr<CaptionSourceStatus> status) {
+void CaptionDockWidget::handle_source_capture_status_change(std::shared_ptr<SourceCaptionerStatus> status) {
     if (!status)
         return;
 

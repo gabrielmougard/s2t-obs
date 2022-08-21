@@ -17,6 +17,7 @@
 #include "audio_capture_pipeline.h"
 
 #include "spdlog/spdlog.h"
+
 namespace backend {
 
 static void audio_captured(void *param, obs_source_t *source, const struct audio_data *audio, bool muted) {
