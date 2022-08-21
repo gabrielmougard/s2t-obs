@@ -35,12 +35,50 @@ grpc_generate_cpp(GRPC_SRCS GRPC_HDRS ${GRPC_GENERATED_PATH} ${PROTOS})
 set(S2T_OBS_PLUGIN_HEADERS
     ${PROTOBUF_INCLUDE_DIRS}
     ${GRPC_GENERATED_PATH}
+    # backend
+    src/backend/audio_capture_pipeline.h
+    src/backend/audio_converter_pipeline.h
+    src/backend/caption.h
+    src/backend/inference_stream.h
+    src/backend/overlapping_caption.h
+    src/backend/post_caption_handler.h
+    src/backend/raw_result.h
+    src/backend/settings.h
+    src/backend/threadsafe_cb.h
+    src/backend/transcript.h
+    # ui
+    src/ui/caption_dock_widget.h
+    src/ui/caption_main_widget.h
+    src/ui/caption_manager.h
+    src/ui/caption_settings_widget.h
+    src/ui/open_caption_settings_widget.h
+    # utils
+    src/utils/backend.h
+    src/utils/caption.h
+    src/utils/random.h
+    src/utils/storage.h
+    src/utils/strings.h
+    src/utils/ui.h
+    src/utils/word.h
 )
 
 set(S2T_OBS_PLUGIN_SRCS
     ${PROTO_SRCS}
     ${GRPC_SRCS}
     src/plugin.cc
+    # ui
+    src/ui/caption_dock_widget.cc
+    src/ui/caption_main_widget.cc
+    src/ui/caption_manager.cc
+    src/ui/caption_settings_widget.cc
+    src/ui/open_caption_settings_widget.cc
+    # backend
+    src/backend/audio_capture_pipeline.cc
+    src/backend/audio_converter_pipeline.cc
+    src/backend/caption.cc
+    src/backend/inference_stream.cc
+    src/backend/overlapping_caption.cc
+    src/backend/post_caption_handler.cc
 )
 
 add_library(s2t-obs-plugin MODULE
