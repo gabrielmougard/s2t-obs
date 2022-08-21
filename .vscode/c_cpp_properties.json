@@ -1,0 +1,32 @@
+{
+    "configurations": [
+      {
+        "name": "Linux",
+        "intelliSenseMode": "clang-x64",
+        "includePath": [
+            "/usr/include",
+            "/usr/local/include",
+            "/usr/lib/x86_64-linux-gnu/glib-2.0/include",
+            "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/include",
+            "/usr/local/include",
+            "/usr/include/x86_64-linux-gnu",
+            // s2t-obs
+            "${workspaceRoot}/s2t-obs/src/backend",
+            "${workspaceRoot}/s2t-obs/src/ui",
+            "${workspaceRoot}/s2t-obs/src/utils",
+            "${workspaceRoot}/s2t-obs/src",
+            // 3rd party
+            "${workspaceRoot}/build_release/install/concurrentqueue/include/concurrentqueue/moodycamel"
+        ],
+        "compilerPath": "/usr/bin/clang",
+        "cStandard": "c11",
+        "cppStandard": "c++17",
+        "browse": {
+          "path": ["${workspaceFolder}"],
+          "limitSymbolsToIncludedHeaders": true,
+          "databaseFilename": ""
+        }
+      }
+    ],
+    "version": 4
+}
